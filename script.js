@@ -37,57 +37,34 @@ function clear() {
 }
 
 function clickNumButton(e) {
-    const btnNum = e.target.textContent;
-    if (firstValue && operator && !temp) {
-        secondValue = '';
-        display.textContent = '';
-        temp = '';
+    if (firstValue && secondValue && temp && operator) {
+        clear();
     }
-    display.textContent += btnNum;
+    
+    const btnNum = e.target.textContent;
     temp += btnNum;
-    /*if (!firstValue) {
-        enterFirstValue(e);
-    } else {
-        enterSecondValue(e);
-    }*/
-}
-
-function enterFirstValue(e) {
-    const btnNum = e.target.textContent;
-    display.textContent += btnNum;
-    firstValue += btnNum;
-}
-
-function enterSecondValue(e) {
-    const btnNum = e.target.textContent;
-    display.textContent += btnNum;
-    secondValue += btnNum;
+    display.textContent = temp;
+    consoleLogValues();
 }
 
 function clickOperatorBtn(e) {
-//    if () {
-    firstValue = temp;
-    temp = '';
-//    }
+    secondValue = '';
     operator = e.target.textContent;
-
-    console.log(`firstValue: ${firstValue}`);
-    console.log(`secondValue: ${secondValue}`);
-    console.log(`temp: ${temp}`);
-    console.log(`operator: ${operator}`);
+    if (!firstValue) {
+        firstValue = temp;
+    }
+    temp = '';
+    consoleLogValues();
 }
 
 function clickEqualBtn() {
-    if (firstValue && operator) {
-        if (!secondValue) {
-            secondValue = display.textContent;
-            display.textContent = operate(operator, firstValue*1, secondValue*1);
-        } else {
-            firstValue = display.textContent;
-            display.textContent = operate(operator, firstValue*1, secondValue*1);
-        }   
-        temp = '';
-    }
+    secondValue = temp;
+    display.textContent = operate(operator, firstValue*1, secondValue*1);
+    firstValue = display.textContent;
+    consoleLogValues();
+}
+
+function consoleLogValues() {
     console.log(`firstValue: ${firstValue}`);
     console.log(`secondValue: ${secondValue}`);
     console.log(`temp: ${temp}`);
