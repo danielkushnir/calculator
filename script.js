@@ -34,34 +34,64 @@ function clear() {
     firstValue = '';
     secondValue = '';
     operator = '';
+    decimalBtnPressed = false;
 }
 
 function clickNumButton(e) {
-    if (firstValue && secondValue && temp && operator) {
+    const btnNum = e.target.textContent;
+    if (firstValue && secondValue 
+        && temp && operator 
+        && (!temp.includes('.'))) {
         clear();
     }
-    
-    const btnNum = e.target.textContent;
+    if (display.textContent == 0 && btnNum == 0) {
+        display.textContent = '0';
+        return;
+    }
     temp += btnNum;
     display.textContent = temp;
     consoleLogValues();
 }
 
 function clickOperatorBtn(e) {
-    secondValue = '';
+    if (firstValue && temp && operator && !secondValue) {
+        clickEqualBtn();
+    }
     operator = e.target.textContent;
-    if (!firstValue) {
+    if (!firstValue || (Math.abs(temp - firstValue) < 1)) {
         firstValue = temp;
     }
     temp = '';
+    secondValue = '';
+    decimalBtnPressed = false;
     consoleLogValues();
 }
 
 function clickEqualBtn() {
+    decimalBtnPressed = false;
     secondValue = temp;
-    display.textContent = operate(operator, firstValue*1, secondValue*1);
+    let result = operate(operator, firstValue*1, secondValue*1);
+    if ((result % 1).toString().length > 7) {
+        result = result.toFixed(7);
+    }
+    display.textContent = result;
     firstValue = display.textContent;
+    if (firstValue.includes('.')) {
+        decimalBtnPressed = true;
+    }
     consoleLogValues();
+}
+
+function clickDecimalBtn() {
+    if (!decimalBtnPressed) {
+        if (firstValue && secondValue && temp && operator) {
+            temp = firstValue;
+        }
+        display.textContent += '.';
+        temp += '.';
+        decimalBtnPressed = true;
+        consoleLogValues();
+    }
 }
 
 function consoleLogValues() {
@@ -69,19 +99,26 @@ function consoleLogValues() {
     console.log(`secondValue: ${secondValue}`);
     console.log(`temp: ${temp}`);
     console.log(`operator: ${operator}`);
+    console.log(`decimalBtnPressed: ${decimalBtnPressed}`);
+    console.log('');
 }
 
 let temp = '';
 let firstValue = '';
 let secondValue = '';
 let operator = '';
+let decimalBtnPressed = false;
+
 
 const display = document.querySelector('#display');
 const numBtns = document.querySelectorAll('.numBtns');
 numBtns.forEach(btn => btn.addEventListener('click', clickNumButton))
 
+const decimalBtn = document.querySelector('#decimalBtn');
+decimalBtn.addEventListener('click', clickDecimalBtn);
+
 const operatorBtns = document.querySelectorAll(".operatorBtns");
 operatorBtns.forEach(btn => btn.addEventListener('click', clickOperatorBtn));
 
 const equalBtn = document.querySelector('#equalBtn');
-equalBtn.addEventListener('click', clickEqualBtn)
+equalBtn.addEventListener('click', clickEqualBtn);
