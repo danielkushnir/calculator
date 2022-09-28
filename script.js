@@ -21,7 +21,7 @@ function operate(operator, a, b) {
             return add(a, b);
         case '-':
             return subtract(a, b);
-        case 'x':
+        case '×':
             return multiply(a, b);
         case '÷':
             return devide(a, b);
@@ -29,12 +29,21 @@ function operate(operator, a, b) {
 }
 
 function clear() {
-    display.textContent = '';
+    display.textContent = '0';
     temp = '';
     firstValue = '';
     secondValue = '';
     operator = '';
     decimalBtnPressed = false;
+}
+
+function deleteKey() {
+    if(firstValue && secondValue 
+        && temp && operator) {
+            
+        }
+    temp = temp.slice(0, -1);
+    display.textContent = temp;
 }
 
 function clickNumButton(e) {
@@ -70,10 +79,12 @@ function clickOperatorBtn(e) {
 function clickEqualBtn() {
     decimalBtnPressed = false;
     secondValue = temp;
-    let result = operate(operator, firstValue*1, secondValue*1);
-    if ((result % 1).toString().length > 7) {
-        result = result.toFixed(7);
-    }
+    let result = operate(operator, Number(firstValue), Number(secondValue));
+    // if ((result % 1).length > 7) {
+    //     result = result.toFixed(7);
+    // } else if (result().length > 7) {
+    //     result = Number(result).toExponential(7);
+    // } 
     display.textContent = result;
     firstValue = display.textContent;
     if (firstValue.includes('.')) {
@@ -122,3 +133,9 @@ operatorBtns.forEach(btn => btn.addEventListener('click', clickOperatorBtn));
 
 const equalBtn = document.querySelector('#equalBtn');
 equalBtn.addEventListener('click', clickEqualBtn);
+
+const clearBtn = document.querySelector("#clearBtn");
+clearBtn.addEventListener('click', clear);
+
+// const delBtn = document.querySelector("#delBtn");
+// delBtn.addEventListener('click', deleteKey);

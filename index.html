@@ -5,38 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet">
     <script src="script.js" defer></script>
     <title>Calculator</title>
 </head>
 <body>
     <div id="mainCalcContainerContainer">
-        <h1>Calculator</h1>
         <div id="mainCalcContainer">
             <div id="display">0</div>
             <div id="btnContainer">
-                <div id="numBtnsContainer">
-                    <button class="numBtns">7</button>
-                    <button class="numBtns">8</button>
-                    <button class="numBtns">9</button>
-                    <button class="numBtns">4</button>
-                    <button class="numBtns">5</button>
-                    <button class="numBtns">6</button>
-                    <button class="numBtns">1</button>
-                    <button class="numBtns">2</button>
-                    <button class="numBtns">3</button>
-                    <button class="numBtns">0</button>
-                    <button id="decimalBtn">.</button>
-                    <button id="equalBtn">=</button>
+                <div id="leftBtnContainer">
+                    <div id="topBtnsContainer">
+                        <button id="clearBtn">C</button>
+                        <button id="plusMinusBtn">±</button>
+                        <button id="percentBtn">%</button>
+                    </div>
+                    <div id="numBtnsContainer">
+                        <button class="numBtns">7</button>
+                        <button class="numBtns">8</button>
+                        <button class="numBtns">9</button>
+                        <button class="numBtns">4</button>
+                        <button class="numBtns">5</button>
+                        <button class="numBtns">6</button>
+                        <button class="numBtns">1</button>
+                        <button class="numBtns">2</button>
+                        <button class="numBtns">3</button>
+                        <button id="zeroBtn" class="numBtns">0</button>
+                        <button id="decimalBtn">.</button>
+                    </div>
                 </div>
-                <div id="">
-                    <button id="clearBtn">C</button>
-                    <button id="delBtn">DEL</button>
-                </div>
+                
+               
                 <div id="operatorBtnsContainer">
-                    <button class="operatorBtns">+</button>
-                    <button class="operatorBtns">-</button>
-                    <button class="operatorBtns">x</button>
                     <button class="operatorBtns">÷</button>
+                    <button class="operatorBtns">×</button>
+                    <button class="operatorBtns">-</button>
+                    <button class="operatorBtns">+</button>
+                    <button id="equalBtn">=</button>
                 </div>
             </div>
         </div>
