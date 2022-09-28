@@ -126,8 +126,7 @@ function clickEqualBtn() {
     } else if (result % 1 !== 0) {
         result = parseFloat(result.toFixed(8));
         display.textContent = Number(result).toLocaleString("en-US");
-    } 
-    else if (Number(result).toString().length > 7) {
+    } else if (Number(result).toString().length > 7) {
         result = Number(result).toExponential(3);
         display.textContent = result;
     } else {
