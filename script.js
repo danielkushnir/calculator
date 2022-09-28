@@ -29,6 +29,17 @@ function operate(operator, a, b) {
 }
 
 function clear() {
+    if (firstValue && !secondValue && temp && operator) {
+        display.textContent = '0';
+        temp = '0';
+        clearBtn.textContent = 'AC';
+        operatorBtns.forEach(btn => {
+            if (btn.textContent == operator) {
+                btn.classList.add('pressedOperatorBtn');
+            }
+        });
+        return;
+    }
     display.textContent = '0';
     clearBtn.textContent = 'AC';
     display.style.fontSize = '65px';
@@ -62,6 +73,7 @@ function checkLength(str) {
 }
 
 function clickNumButton(e) {
+    operatorBtns.forEach(btn => btn.classList.remove('pressedOperatorBtn'));
     if (temp.length == 9) return;
     const btnNum = e.target.textContent;
     if (firstValue && secondValue 
@@ -84,9 +96,11 @@ function clickNumButton(e) {
 }
 
 function clickOperatorBtn(e) {
+    operatorBtns.forEach(btn => btn.classList.remove('pressedOperatorBtn'));
     if (firstValue && temp && operator && !secondValue) {
         clickEqualBtn();
     }
+    e.target.classList.add('pressedOperatorBtn');
     operator = e.target.textContent;
     if (!firstValue || (Math.abs(temp - firstValue) < 1)) {
         firstValue = temp;
@@ -162,6 +176,3 @@ equalBtn.addEventListener('click', clickEqualBtn);
 
 const clearBtn = document.querySelector("#clearBtn");
 clearBtn.addEventListener('click', clear);
-
-// const delBtn = document.querySelector("#delBtn");
-// delBtn.addEventListener('click', deleteKey);
