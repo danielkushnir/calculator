@@ -30,8 +30,9 @@ function operate(operator, a, b) {
 
 function clear() {
     display.textContent = '0';
-    display.style.fontSize = '60px';
-    temp = '';
+    clearBtn.textContent = 'AC';
+    display.style.fontSize = '65px';
+    temp = '0';
     firstValue = '';
     secondValue = '';
     operator = '';
@@ -47,13 +48,16 @@ function deleteKey() {
     display.textContent = temp;
 }
 
-function checkLength() {
-    if (display.textContent.length < 8) {
-        display.style.fontSize = '60px';
-    } else if (display.textContent.length == 8) {
-        display.style.fontSize = '52px';
-    } else if (display.textContent.length > 8) {
-        display.style.fontSize = '48px';
+function checkLength(str) {
+    strNew = str.replace(/[.,\s]/g, '');
+    if (strNew.length < 7) {
+        display.style.fontSize = '65px';
+    } else if (strNew.length == 7) {
+        display.style.fontSize = '58px';
+    } else if (strNew.length == 8) {
+        display.style.fontSize = '50px';
+    } else if (strNew.length > 8) {
+        display.style.fontSize = '45px';
     }
 }
 
@@ -65,13 +69,17 @@ function clickNumButton(e) {
         && (!temp.includes('.'))) {
         clear();
     }
-    if (display.textContent == 0 && btnNum == 0) {
+    if (display.textContent == 0 && btnNum == 0 && !decimalBtnPressed) {
         display.textContent = '0';
         return;
     }
     temp += btnNum;
-    display.textContent = temp;
-    checkLength();
+    if (temp != 0 && temp[0] == 0 && temp[1] != '.') {
+        temp = temp.slice(1);
+    }
+    display.textContent = Number(temp).toLocaleString("en-US");
+    clearBtn.textContent = 'C';
+    checkLength(temp);
     consoleLogValues();
 }
 
@@ -94,14 +102,18 @@ function clickEqualBtn() {
     secondValue = temp;
     let result = operate(operator, Number(firstValue), Number(secondValue));
     if (result % 1 !== 0) {
-        result = parseFloat(result.toFixed(7));
-    } else if (Number(result).toString().length > 7) {
-        result = Number(result).toExponential(3);
+        result = parseFloat(result.toFixed(8));
     } 
-    display.textContent = result;
-    checkLength();
-    firstValue = display.textContent;
-    if (firstValue.includes('.')) {
+    if (Number(result).toString().length > 7) {
+        result = Number(result).toExponential(3);
+        display.textContent = result;
+    } else {
+        display.textContent = Number(result).toLocaleString("en-US");
+    }
+    
+    firstValue = result.toString();
+    checkLength(firstValue.toString());
+    if (display.textContent.includes('.')) {
         decimalBtnPressed = true;
     }
     consoleLogValues();
@@ -128,7 +140,7 @@ function consoleLogValues() {
     console.log('');
 }
 
-let temp = '';
+let temp = '0';
 let firstValue = '';
 let secondValue = '';
 let operator = '';
