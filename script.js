@@ -29,6 +29,7 @@ function operate(operator, a, b) {
 }
 
 function clear() {
+    operatorBtns.forEach(btn => btn.classList.remove('pressedOperatorBtn'));
     if (firstValue && !secondValue && temp && operator) {
         display.textContent = '0';
         temp = '0';
@@ -96,6 +97,10 @@ function clickNumButton(e) {
 }
 
 function clickOperatorBtn(e) {
+    if (firstValue == 'E') {
+        clear();
+        return
+    }
     operatorBtns.forEach(btn => btn.classList.remove('pressedOperatorBtn'));
     if (firstValue && temp && operator && !secondValue) {
         clickEqualBtn();
@@ -112,13 +117,17 @@ function clickOperatorBtn(e) {
 }
 
 function clickEqualBtn() {
+    operatorBtns.forEach(btn => btn.classList.remove('pressedOperatorBtn'));
     decimalBtnPressed = false;
     secondValue = temp;
     let result = operate(operator, Number(firstValue), Number(secondValue));
-    if (result % 1 !== 0) {
+    if (result == 'E') {
+        display.textContent = result;
+    } else if (result % 1 !== 0) {
         result = parseFloat(result.toFixed(8));
+        display.textContent = Number(result).toLocaleString("en-US");
     } 
-    if (Number(result).toString().length > 7) {
+    else if (Number(result).toString().length > 7) {
         result = Number(result).toExponential(3);
         display.textContent = result;
     } else {
@@ -126,7 +135,7 @@ function clickEqualBtn() {
     }
     
     firstValue = result.toString();
-    checkLength(firstValue.toString());
+    checkLength(display.textContent);
     if (display.textContent.includes('.')) {
         decimalBtnPressed = true;
     }
