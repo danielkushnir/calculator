@@ -30,6 +30,7 @@ function operate(operator, a, b) {
 
 function clear() {
     display.textContent = '0';
+    display.style.fontSize = '60px';
     temp = '';
     firstValue = '';
     secondValue = '';
@@ -46,7 +47,18 @@ function deleteKey() {
     display.textContent = temp;
 }
 
+function checkLength() {
+    if (display.textContent.length < 8) {
+        display.style.fontSize = '60px';
+    } else if (display.textContent.length == 8) {
+        display.style.fontSize = '52px';
+    } else if (display.textContent.length > 8) {
+        display.style.fontSize = '48px';
+    }
+}
+
 function clickNumButton(e) {
+    if (temp.length == 9) return;
     const btnNum = e.target.textContent;
     if (firstValue && secondValue 
         && temp && operator 
@@ -59,6 +71,7 @@ function clickNumButton(e) {
     }
     temp += btnNum;
     display.textContent = temp;
+    checkLength();
     consoleLogValues();
 }
 
@@ -80,12 +93,13 @@ function clickEqualBtn() {
     decimalBtnPressed = false;
     secondValue = temp;
     let result = operate(operator, Number(firstValue), Number(secondValue));
-    // if ((result % 1).length > 7) {
-    //     result = result.toFixed(7);
-    // } else if (result().length > 7) {
-    //     result = Number(result).toExponential(7);
-    // } 
+    if (result % 1 !== 0) {
+        result = parseFloat(result.toFixed(7));
+    } else if (Number(result).toString().length > 7) {
+        result = Number(result).toExponential(3);
+    } 
     display.textContent = result;
+    checkLength();
     firstValue = display.textContent;
     if (firstValue.includes('.')) {
         decimalBtnPressed = true;
