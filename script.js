@@ -93,7 +93,6 @@ function clickNumButton(e) {
     display.textContent = Number(temp).toLocaleString("en-US");
     clearBtn.textContent = 'C';
     checkLength(temp);
-    consoleLogValues();
 }
 
 function clickOperatorBtn(e) {
@@ -113,7 +112,6 @@ function clickOperatorBtn(e) {
     temp = '';
     secondValue = '';
     decimalBtnPressed = false;
-    consoleLogValues();
 }
 
 function clickEqualBtn() {
@@ -125,7 +123,7 @@ function clickEqualBtn() {
         display.textContent = result;
     } else if (result % 1 !== 0) {
         result = parseFloat(result.toFixed(8));
-        display.textContent = Number(result).toLocaleString("en-US");
+        display.textContent = result;
     } else if (Number(result).toString().length > 7) {
         result = Number(result).toExponential(3);
         display.textContent = result;
@@ -138,7 +136,6 @@ function clickEqualBtn() {
     if (display.textContent.includes('.')) {
         decimalBtnPressed = true;
     }
-    consoleLogValues();
 }
 
 function clickDecimalBtn() {
@@ -149,7 +146,6 @@ function clickDecimalBtn() {
         display.textContent += '.';
         temp += '.';
         decimalBtnPressed = true;
-        consoleLogValues();
     }
 }
 
